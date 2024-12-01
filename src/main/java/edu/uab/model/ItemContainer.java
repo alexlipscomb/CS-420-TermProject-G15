@@ -1,20 +1,30 @@
 package edu.uab.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
-public class ItemContainer {
-  private ArrayList<Item> items;
-  private ArrayList<ItemContainer> itemContainers;
+public class ItemContainer extends Component {
+  private List<Component> components;
 
-  public ItemContainer() {
+  public ItemContainer(String name, BigDecimal price, Location location, Dimensions dimensions) {
+    super(name, price, location, dimensions);
+    this.components = new ArrayList<>();
   }
 
-  public boolean addItem(Item item) {
-    return this.items.add(item);
+  public boolean add(Component component) {
+    if (!this.components.contains(component)) {
+      return this.components.add(component);
+    }
+
+    return false;
   }
 
-  public boolean addItemContainer(ItemContainer itemContainer) {
-    return this.itemContainers.add(itemContainer);
+  public boolean remove(Component component) {
+    return this.components.remove(component);
   }
 
+  public List<Component> getComponents() {
+    return this.components;
+  }
 }
