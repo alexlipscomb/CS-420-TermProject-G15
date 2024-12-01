@@ -46,4 +46,21 @@ public abstract class Component {
   public void setDimensions(Dimensions dimensions) {
     this.dimensions = dimensions;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Component other = (Component) o;
+    return name.equals(other.name)
+        && price.equals(other.price)
+        && location.equals(other.location)
+        && dimensions.equals(other.dimensions);
+  }
 }
