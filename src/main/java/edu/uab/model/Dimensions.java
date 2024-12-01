@@ -35,4 +35,18 @@ public class Dimensions {
         + ", height=" + this.height
         + ")";
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
+
+    Dimensions dimensions = (Dimensions) o;
+    return this.length == dimensions.length && this.width == dimensions.width && this.height == dimensions.height;
+  }
 }

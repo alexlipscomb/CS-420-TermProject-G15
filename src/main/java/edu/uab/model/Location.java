@@ -23,13 +23,12 @@ public class Location {
       return true;
     }
 
-    if (o == null || getClass() != o.getClass()) {
+    if (o == null || this.getClass() != o.getClass()) {
       return false;
     }
 
     Location location = (Location) o;
     return this.x == location.x && this.y == location.y;
-
   }
 
   @Override
