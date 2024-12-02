@@ -1,12 +1,16 @@
 default: run
 
-.PHONY: clean run test
+.PHONY: clean install run test
 
 clean:
 	mvn clean
+
+install:
+	mvn install
 
 run:
 	mvn clean javafx:run
 
 test:
 	mvn test
+
