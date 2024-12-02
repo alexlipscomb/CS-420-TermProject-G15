@@ -2,24 +2,27 @@ package edu.uab;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.stage.Stage;
+import java.io.IOException;
 
-/**
- * JavaFX App
- */
 public class App extends Application {
+  private static double WIDTH = 640;
+  private static double HEIGHT = 480;
 
   @Override
   public void start(Stage stage) {
-    var javaVersion = SystemInfo.javaVersion();
-    var javafxVersion = SystemInfo.javafxVersion();
+    try {
+      FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/edu/uab/view/MainView.fxml"));
+      Parent root = loader.load();
 
-    var label = new Label("Hello, JavaFX " + javafxVersion + ", running on Java " + javaVersion + ".");
-    var scene = new Scene(new StackPane(label), 640, 480);
-    stage.setScene(scene);
-    stage.show();
+      Scene scene = new Scene(root, App.WIDTH, App.HEIGHT);
+      stage.setScene(scene);
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   public static void main(String[] args) {
