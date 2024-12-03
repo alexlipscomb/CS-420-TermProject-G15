@@ -49,6 +49,8 @@
           </font>
         </Text>
         <Button layoutX="20.0" layoutY="250.0" text="Add Item" onAction="#handleAddItem" />
+        <Button layoutY="170.0" layoutX="0.0" text="Edit Dimensions"
+          onAction="#handleEditDimensions" />
         <ListView fx:id="commandsOnContainersList" layoutX="20.0" layoutY="282.0" prefHeight="190.0"
           prefWidth="364.0" />
         <Text layoutX="22.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0"

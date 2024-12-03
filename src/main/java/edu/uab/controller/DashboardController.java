@@ -2,8 +2,10 @@ package edu.uab.controller;
 
 import java.io.IOException;
 import edu.uab.controller.ItemContainerCommands.AddItemModalController;
+import edu.uab.controller.ItemContainerCommands.EditDimensionsModalController;
 import edu.uab.model.Component;
 import edu.uab.model.Dashboard;
+import edu.uab.model.Dimensions;
 import edu.uab.model.Item;
 import edu.uab.model.ItemContainer;
 import javafx.scene.Parent;
@@ -95,5 +97,39 @@ public class DashboardController {
     alert.setHeaderText(null);
     alert.setContentText(message);
     alert.showAndWait();
+  }
+
+  @FXML
+  public void handleEditDimensions() {
+    TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
+
+    if (selectedNode == null) {
+      this.showAlert("No Selection", "No item is selected to edit!", Alert.AlertType.WARNING);
+      return;
+    }
+
+    Component component = selectedNode.getValue();
+
+    Dimensions dimensions = component.getDimensions();
+
+    try {
+      FXMLLoader loader = new FXMLLoader(
+          this.getClass().getResource("/edu/uab/view/ItemContainerCommands/EditDimensionsModal.fxml"));
+      Parent modalRoot = loader.load();
+
+      EditDimensionsModalController modalController = loader.getController();
+      modalController.setDimensions(dimensions);
+
+      Stage modalStage = new Stage();
+      modalStage.initModality(Modality.APPLICATION_MODAL);
+      modalStage.setTitle("Add Item");
+      modalStage.setScene(new Scene(modalRoot));
+      modalStage.showAndWait();
+
+      component.setDimensions(modalController.getDimensions());
+    } catch (IOException e) {
+      e.printStackTrace();
+      this.showAlert("Error", "An unexpected error occurred", Alert.AlertType.ERROR);
+    }
   }
 }
