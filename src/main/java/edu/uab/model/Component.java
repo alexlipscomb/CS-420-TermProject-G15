@@ -63,4 +63,9 @@ public abstract class Component {
         && location.equals(other.location)
         && dimensions.equals(other.dimensions);
   }
+
+  @Override
+  public String toString() {
+    return this.name;
+  }
 }
