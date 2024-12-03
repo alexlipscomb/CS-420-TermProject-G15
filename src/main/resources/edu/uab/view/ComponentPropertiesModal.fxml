@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="edu.uab.controller.ComponentPropertiesModalController"
+  alignment="CENTER" spacing="20" style="-fx-padding: 20px;" prefWidth="400">
+  <children>
+    <!-- Header -->
+    <Label text="Edit Component Properties" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+    <!-- Fields Layout -->
+    <GridPane hgap="10" vgap="10" alignment="CENTER">
+      <columnConstraints>
+        <ColumnConstraints halignment="RIGHT" />
+        <ColumnConstraints halignment="LEFT" />
+      </columnConstraints>
+
+      <!-- Name -->
+      <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+      <TextField fx:id="nameField" GridPane.rowIndex="0" GridPane.columnIndex="1" prefWidth="200" />
+
+      <!-- Price -->
+      <Label text="Price:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+      <TextField fx:id="priceField" GridPane.rowIndex="1" GridPane.columnIndex="1" prefWidth="200" />
+
+      <!-- Dimensions -->
+      <Label text="Dimensions:" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+      <HBox spacing="5" alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="1">
+        <TextField fx:id="lengthField" promptText="Length" prefWidth="60" />
+        <TextField fx:id="widthField" promptText="Width" prefWidth="60" />
+        <TextField fx:id="heightField" promptText="Height" prefWidth="60" />
+      </HBox>
+
+      <!-- Location -->
+      <Label text="Location:" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+      <HBox spacing="5" alignment="CENTER" GridPane.rowIndex="3" GridPane.columnIndex="1">
+        <TextField fx:id="xField" promptText="X" prefWidth="60" />
+        <TextField fx:id="yField" promptText="Y" prefWidth="60" />
+      </HBox>
+    </GridPane>
+
+    <!-- Buttons -->
+    <HBox alignment="CENTER" spacing="20" style="-fx-padding: 10px;">
+      <Button text="Cancel" onAction="#handleCancel" prefWidth="100" />
+      <Button text="Apply" onAction="#handleApply" prefWidth="100" />
+    </HBox>
+  </children>
+</VBox>

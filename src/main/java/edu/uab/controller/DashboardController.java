@@ -1,17 +1,17 @@
 package edu.uab.controller;
 
 import java.io.IOException;
+
 import edu.uab.controller.ItemContainerCommands.AddItemModalController;
-import edu.uab.controller.ItemContainerCommands.EditDimensionsModalController;
 import edu.uab.model.Component;
 import edu.uab.model.Dashboard;
-import edu.uab.model.Dimensions;
 import edu.uab.model.Item;
 import edu.uab.model.ItemContainer;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
@@ -54,7 +54,7 @@ public class DashboardController {
       Component selectedComponent = selectedNode.getValue();
 
       if (!(selectedComponent instanceof ItemContainer)) {
-        this.showAlert("Invalid Selection", "Cannot add an item to a non-container", Alert.AlertType.ERROR);
+        this.showAlert("Invalid Selection", "Cannot add an item to a non-container", AlertType.ERROR);
         return;
       }
     }
@@ -87,49 +87,84 @@ public class DashboardController {
       }
     } catch (IOException e) {
       e.printStackTrace();
-      this.showAlert("Error", "An unexpected error occurred", Alert.AlertType.ERROR);
+      this.showAlert("Error", "An unexpected error occurred", AlertType.ERROR);
     }
   }
 
-  private void showAlert(String title, String message, Alert.AlertType alertType) {
-    Alert alert = new Alert(alertType);
-    alert.setTitle(title);
-    alert.setHeaderText(null);
-    alert.setContentText(message);
-    alert.showAndWait();
-  }
-
   @FXML
-  public void handleEditDimensions() {
+  public void handleDeleteItem() {
     TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
 
     if (selectedNode == null) {
-      this.showAlert("No Selection", "No item is selected to edit!", Alert.AlertType.WARNING);
+      this.showAlert("Nothing to delete", "There's nothing selected to delete.", AlertType.INFORMATION);
+      return;
+    }
+
+    TreeItem<Component> parentNode = selectedNode.getParent();
+
+    if (parentNode == null) {
+      this.showAlert("Cannot delete root", "Cannot delete the root node.", AlertType.WARNING);
+      return;
+    }
+
+    Component selectedComponent = selectedNode.getValue();
+    ItemContainer parentContainer = (ItemContainer) parentNode.getValue();
+
+    parentContainer.remove(selectedComponent);
+
+    parentNode.getChildren().remove(selectedNode);
+
+    this.showAlert("Success", selectedComponent.getName() + " has been deleted.", AlertType.INFORMATION);
+  }
+
+  public void handleEditComponent() {
+    TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
+
+    if (selectedNode == null) {
+      this.showAlert("No Selection", "No item is selected to edit!", AlertType.WARNING);
       return;
     }
 
     Component component = selectedNode.getValue();
 
-    Dimensions dimensions = component.getDimensions();
-
     try {
       FXMLLoader loader = new FXMLLoader(
-          this.getClass().getResource("/edu/uab/view/ItemContainerCommands/EditDimensionsModal.fxml"));
+          this.getClass().getResource("/edu/uab/view/ComponentPropertiesModal.fxml"));
       Parent modalRoot = loader.load();
 
-      EditDimensionsModalController modalController = loader.getController();
-      modalController.setDimensions(dimensions);
+      ComponentPropertiesModalController modalController = loader.getController();
+
+      modalController.setName(component.getName());
+      modalController.setPrice(component.getPrice());
+      modalController.setDimensions(component.getDimensions());
+      modalController.setLocation(component.getLocation());
 
       Stage modalStage = new Stage();
       modalStage.initModality(Modality.APPLICATION_MODAL);
-      modalStage.setTitle("Add Item");
+      modalStage.setTitle("Edit Component Properties");
       modalStage.setScene(new Scene(modalRoot));
+
       modalStage.showAndWait();
 
-      component.setDimensions(modalController.getDimensions());
-    } catch (IOException e) {
+      if (modalController.isConfirmed()) {
+        component.setName(modalController.getName());
+        component.setPrice(modalController.getPrice());
+        component.setDimensions(modalController.getDimensions());
+        component.setLocation(modalController.getLocation());
+
+        this.treeView.refresh();
+      }
+    } catch (Exception e) {
       e.printStackTrace();
-      this.showAlert("Error", "An unexpected error occurred", Alert.AlertType.ERROR);
+      this.showAlert("Error", "An unexpected error occurred", AlertType.ERROR);
     }
+  }
+
+  private void showAlert(String title, String message, AlertType alertType) {
+    Alert alert = new Alert(alertType);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 }
