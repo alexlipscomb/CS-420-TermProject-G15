@@ -1,16 +1,24 @@
 package edu.uab.controller;
 
 import java.io.IOException;
-
+import java.util.List;
 import edu.uab.model.Component;
 import edu.uab.model.Dashboard;
+import java.util.HashMap;
+import java.util.Map;
+import edu.uab.model.Dimensions;
 import edu.uab.model.Item;
 import edu.uab.model.ItemContainer;
+import edu.uab.model.Location;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
@@ -20,18 +28,39 @@ import javafx.scene.Scene;
 public class DashboardController {
   @FXML
   private TreeView<Component> treeView;
+  @FXML
+  Pane plotPane;
   private Dashboard dashboard;
+  private Map<Component, Rectangle> componentRectangleMap = new HashMap<>();
+  private Rectangle highlightedRectangle = null;
 
   @FXML
   public void initialize() {
     this.dashboard = Dashboard.getInstance();
-    ItemContainer rootContainer = dashboard.getRootContainer();
+    ItemContainer rootContainer = this.dashboard.getRootContainer();
 
     TreeItem<Component> rootNode = new TreeItem<>(rootContainer);
-    treeView.setRoot(rootNode);
-    treeView.setShowRoot(true);
+    this.treeView.setRoot(rootNode);
+    this.treeView.setShowRoot(true);
 
     this.populateTree(rootNode, rootContainer);
+    this.drawPlot();
+
+    // Highlight selected rectangle
+    treeView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+      Component selectedComponent = newValue != null ? newValue.getValue() : null;
+      if (this.highlightedRectangle != null) {
+        this.highlightedRectangle.setStroke(Color.BLACK);
+      }
+
+      if (selectedComponent != null) {
+        Rectangle rectangle = this.componentRectangleMap.get(selectedComponent);
+        if (rectangle != null) {
+          rectangle.setStroke(Color.RED);
+          this.highlightedRectangle = rectangle;
+        }
+      }
+    });
   }
 
   private void populateTree(TreeItem<Component> treeItem, ItemContainer container) {
@@ -41,6 +70,56 @@ public class DashboardController {
 
       if (component instanceof ItemContainer) {
         this.populateTree(childNode, (ItemContainer) component);
+      }
+    }
+  }
+
+  private void drawPlot() {
+    this.plotPane.getChildren().clear();
+
+    List<Component> components = this.dashboard.getAllComponents();
+
+    for (Component component : components) {
+      drawComponent(component);
+    }
+  }
+
+  private void drawComponent(Component component) {
+    if (component == null || component.getLocation() == null || component.getDimensions() == null) {
+      return;
+    }
+
+    Location location = component.getLocation();
+    Dimensions dimensions = component.getDimensions();
+
+    // TODO: Make constants
+    double farmLength = 800.0;
+    double farmWidth = 600.0;
+
+    double xScale = this.plotPane.getPrefWidth() / farmLength;
+    double yScale = this.plotPane.getPrefHeight() / farmWidth;
+
+    double x = location.getX() * xScale;
+    double y = location.getY() * yScale;
+    double width = dimensions.getLength() * xScale;
+    double height = dimensions.getWidth() * yScale;
+
+    Rectangle rectangle = new Rectangle(x, y, width, height);
+    rectangle.setStroke(Color.BLACK);
+    rectangle.setFill(Color.TRANSPARENT);
+    rectangle.setStrokeWidth(1);
+
+    Tooltip tooltip = new Tooltip(component.getName());
+    Tooltip.install(rectangle, tooltip);
+
+    this.componentRectangleMap.put(component, rectangle);
+
+    this.plotPane.getChildren().add(rectangle);
+
+    if (component instanceof ItemContainer) {
+      ItemContainer container = (ItemContainer) component;
+      for (Component child : container.getComponents()) {
+        drawComponent(child);
       }
     }
   }
@@ -84,6 +163,7 @@ public class DashboardController {
         selectedContainer.add(newItem);
         selectedNode.getChildren().add(new TreeItem<>(newItem));
       }
+      this.drawPlot();
     } catch (IOException e) {
       e.printStackTrace();
       this.showAlert("Error", "An unexpected error occurred", AlertType.ERROR);
@@ -112,6 +192,8 @@ public class DashboardController {
     parentContainer.remove(selectedComponent);
 
     parentNode.getChildren().remove(selectedNode);
+
+    this.drawPlot();
 
     this.showAlert("Success", selectedComponent.getName() + " has been deleted.", AlertType.INFORMATION);
   }
@@ -153,6 +235,8 @@ public class DashboardController {
 
         this.treeView.refresh();
       }
+
+      this.drawPlot();
     } catch (Exception e) {
       e.printStackTrace();
       this.showAlert("Error", "An unexpected error occurred", AlertType.ERROR);
