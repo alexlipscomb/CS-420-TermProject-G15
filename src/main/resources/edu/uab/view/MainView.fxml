@@ -7,80 +7,64 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="edu.uab.controller.DashboardController">
+<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.uab.controller.DashboardController">
   <children>
-    <AnchorPane layoutX="455.0" layoutY="19.0" prefHeight="800.0" prefWidth="600.0"
-      style="-fx-border-color: gray;">
+    <AnchorPane layoutX="455.0" layoutY="19.0" prefHeight="800.0" prefWidth="600.0" style="-fx-border-color: gray;">
       <children>
-        <AnchorPane layoutX="23.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0"
-          style="-fx-border-color: gray;">
+        <AnchorPane layoutX="23.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" style="-fx-border-color: gray;">
           <children>
-            <Text layoutX="61.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Control Center" textAlignment="CENTER" />
+            <Text layoutX="61.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Control Center" textAlignment="CENTER" />
           </children>
         </AnchorPane>
-        <Text layoutX="23.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          text="2. Visualization">
+        <Text layoutX="23.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2. Visualization">
           <font>
             <Font size="24.0" />
           </font>
         </Text>
       </children>
     </AnchorPane>
-    <AnchorPane layoutX="26.0" layoutY="18.0" prefHeight="493.0" prefWidth="407.0"
-      style="-fx-border-color: gray;">
+    <AnchorPane layoutX="26.0" layoutY="18.0" prefHeight="493.0" prefWidth="407.0" style="-fx-border-color: gray;">
       <children>
-        <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          text="1. Items/item containers" wrappingWidth="316.4405937194824">
+        <Text layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Items/item containers" wrappingWidth="316.4405937194824">
           <font>
             <Font size="24.0" />
           </font>
         </Text>
-        <TreeView fx:id="treeView" layoutX="20.0" layoutY="44.0" prefHeight="190.0"
-          prefWidth="192.0" style="-fx-border-color: gray;" />
-        <ListView fx:id="commandsOnItemsList" layoutX="225.0" layoutY="68.0" prefHeight="166.0"
-          prefWidth="170.0" />
-        <Text layoutX="225.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          style="-fx-border-color: gray;" text="Commands on items" textAlignment="CENTER"
-          wrappingWidth="170.4000000000001">
+        <TreeView fx:id="treeView" layoutX="20.0" layoutY="44.0" prefHeight="447.0" prefWidth="192.0" style="-fx-border-color: gray;" />
+        <ListView fx:id="commandsOnItemsList" layoutX="225.0" layoutY="68.0" prefHeight="421.0" prefWidth="170.0" />
+        <Text layoutX="210.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-border-color: gray;" text="Commands on items/item containers" textAlignment="CENTER" wrappingWidth="211.7333740234376">
           <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
           </font>
         </Text>
-        <Button layoutX="20.0" layoutY="250.0" text="Add Item" onAction="#handleAddItem" />
-        <Button layoutY="170.0" layoutX="0.0" text="Edit Dimensions"
-          onAction="#handleEditDimensions" />
-        <ListView fx:id="commandsOnContainersList" layoutX="20.0" layoutY="282.0" prefHeight="190.0"
-          prefWidth="364.0" />
-        <Text layoutX="22.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          text="Commands on item containers" textAlignment="CENTER" wrappingWidth="364.0">
-          <font>
-            <Font size="18.0" />
-          </font>
-        </Text>
+        <Button layoutX="228.0" layoutY="74.0" onAction="#handleAddItem" text="Add Item" />
+        <Button layoutX="228.0" layoutY="138.0" onAction="#handleEditDimensions" text="Edit Dimensions" />
+            <Button layoutX="225.0" layoutY="106.0" mnemonicParsing="false" text="Delete Item" />
+            <Button layoutX="228.0" layoutY="171.0" mnemonicParsing="false" text="Change Height" />
+            <Button layoutX="228.0" layoutY="203.0" mnemonicParsing="false" text="Change Width" />
+            <Button layoutX="228.0" layoutY="235.0" mnemonicParsing="false" text="Change Length" />
+            <Button layoutX="226.0" layoutY="266.0" mnemonicParsing="false" text="Change Location" />
+            <Button layoutX="226.0" layoutY="301.0" mnemonicParsing="false" text="Add Item Container" />
+            <Button layoutX="225.0" layoutY="333.0" mnemonicParsing="false" text="Delete Item Container" />
+            <Button layoutX="228.0" layoutY="368.0" mnemonicParsing="false" text="Change Price" />
+            <Button layoutX="228.0" layoutY="401.0" mnemonicParsing="false" text="Change Name" />
       </children>
     </AnchorPane>
-    <AnchorPane layoutX="26.0" layoutY="523.0" prefHeight="296.0" prefWidth="407.0"
-      style="-fx-border-color: gray;">
+    <AnchorPane layoutX="26.0" layoutY="523.0" prefHeight="296.0" prefWidth="407.0" style="-fx-border-color: gray;">
       <children>
-        <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          text="3. Drone Actions">
+        <Text layoutX="14.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Drone Actions">
           <font>
             <Font size="24.0" />
           </font>
         </Text>
         <Button fx:id="scanButton" layoutX="33.0" layoutY="85.0" mnemonicParsing="false" text="Scan" />
-        <Button fx:id="scanFarmButton" layoutX="33.0" layoutY="148.0" mnemonicParsing="false"
-          text="Scan" />
-        <Text layoutX="88.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          text="Scan current item/item container" wrappingWidth="277.60003662109375">
+        <Button fx:id="scanFarmButton" layoutX="33.0" layoutY="148.0" mnemonicParsing="false" text="Scan" />
+        <Text layoutX="88.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scan current item/item container" wrappingWidth="277.60003662109375">
           <font>
             <Font size="19.0" />
           </font>
         </Text>
-        <Text layoutX="88.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scan farm"
-          wrappingWidth="191.9999999999999">
+        <Text layoutX="88.0" layoutY="168.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Scan farm" wrappingWidth="191.9999999999999">
           <font>
             <Font size="19.0" />
           </font>
