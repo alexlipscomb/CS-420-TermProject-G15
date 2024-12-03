@@ -11,7 +11,7 @@ public class Drone extends Item {
   private final ImageView droneView;
   private Location targetLocation;
   private boolean isFlying;
-  private double speed = 100; // px per second
+  private double speed = 150; // px per second
 
   public Drone(CommandCenter commandCenter) {
     super("Drone", new BigDecimal(0), commandCenter.getLocation(), new Dimensions(10, 10, 0)); // Drone is 10x10 in size

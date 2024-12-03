@@ -287,7 +287,19 @@ public class DashboardController {
       return;
     }
 
-    this.commandCenter.getDrone().flyTo(selectedComponent.getLocation(), this.plotPane, this.commandCenter);
+    Drone drone = this.commandCenter.getDrone();
+
+    drone.flyTo(selectedComponent.getLocation(), this.plotPane, this.commandCenter);
+
+    new AnimationTimer() {
+      @Override
+      public void handle(long now) {
+        if (!drone.isFlying()) {
+          stop();
+          drone.flyTo(commandCenter.getLocation(), plotPane, commandCenter);
+        }
+      }
+    }.start();
   }
 
   @FXML
