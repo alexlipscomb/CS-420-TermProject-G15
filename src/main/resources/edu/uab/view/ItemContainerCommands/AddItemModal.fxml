@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+  fx:controller="edu.uab.controller.ItemContainerCommands.AddItemModalController" spacing="10"
+  alignment="CENTER"
+  prefWidth="400">
+  <children>
+    <Label text="Add New Item" style="-fx-font-size: 18px;" />
+    <TextField fx:id="nameField" promptText="Name" />
+    <TextField fx:id="priceField" promptText="Price" />
+    <TextField fx:id="xField" promptText="Location X" />
+    <TextField fx:id="yField" promptText="Location Y" />
+    <TextField fx:id="lengthField" promptText="Length" />
+    <TextField fx:id="widthField" promptText="Width" />
+    <TextField fx:id="heightField" promptText="Height" />
+    <Button text="Add" onAction="#handleAdd" />
+    <Button text="Cancel" onAction="#handleCancel" />
+  </children>
+</VBox>

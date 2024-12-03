@@ -1,5 +1,99 @@
 package edu.uab.controller;
 
+import java.io.IOException;
+import edu.uab.controller.ItemContainerCommands.AddItemModalController;
+import edu.uab.model.Component;
+import edu.uab.model.Dashboard;
+import edu.uab.model.Item;
+import edu.uab.model.ItemContainer;
+import javafx.scene.Parent;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+
 public class DashboardController {
-  // TODO
+  @FXML
+  private TreeView<Component> treeView;
+  private Dashboard dashboard;
+
+  @FXML
+  public void initialize() {
+    this.dashboard = Dashboard.getInstance();
+    ItemContainer rootContainer = dashboard.getRootContainer();
+
+    TreeItem<Component> rootNode = new TreeItem<>(rootContainer);
+    treeView.setRoot(rootNode);
+    treeView.setShowRoot(true);
+
+    this.populateTree(rootNode, rootContainer);
+  }
+
+  private void populateTree(TreeItem<Component> treeItem, ItemContainer container) {
+    for (Component component : container.getComponents()) {
+      TreeItem<Component> childNode = new TreeItem<>(component);
+      treeItem.getChildren().add(childNode);
+
+      if (component instanceof ItemContainer) {
+        this.populateTree(childNode, (ItemContainer) component);
+      }
+    }
+  }
+
+  @FXML
+  public void handleAddItem() {
+    TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
+
+    if (selectedNode != null) {
+      Component selectedComponent = selectedNode.getValue();
+
+      if (!(selectedComponent instanceof ItemContainer)) {
+        this.showAlert("Invalid Selection", "Cannot add an item to a non-container", Alert.AlertType.ERROR);
+        return;
+      }
+    }
+
+    try {
+      FXMLLoader loader = new FXMLLoader(
+          this.getClass().getResource("/edu/uab/view/ItemContainerCommands/AddItemModal.fxml"));
+      Parent modalRoot = loader.load();
+
+      Stage modalStage = new Stage();
+      modalStage.initModality(Modality.APPLICATION_MODAL);
+      modalStage.setTitle("Add Item");
+      modalStage.setScene(new Scene(modalRoot));
+      modalStage.showAndWait();
+
+      AddItemModalController modalController = loader.getController();
+      Item newItem = modalController.getCreatedItem();
+
+      if (newItem == null) {
+        return;
+      }
+
+      if (selectedNode == null) {
+        this.dashboard.getRootContainer().add(newItem);
+        this.treeView.getRoot().getChildren().add(new TreeItem<>(newItem));
+      } else {
+        ItemContainer selectedContainer = (ItemContainer) selectedNode.getValue();
+        selectedContainer.add(newItem);
+        selectedNode.getChildren().add(new TreeItem<>(newItem));
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+      this.showAlert("Error", "An unexpected error occurred", Alert.AlertType.ERROR);
+    }
+  }
+
+  private void showAlert(String title, String message, Alert.AlertType alertType) {
+    Alert alert = new Alert(alertType);
+    alert.setTitle(title);
+    alert.setHeaderText(null);
+    alert.setContentText(message);
+    alert.showAndWait();
+  }
 }
