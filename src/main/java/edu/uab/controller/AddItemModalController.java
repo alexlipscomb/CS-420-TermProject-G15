@@ -1,11 +1,13 @@
 package edu.uab.controller;
 
 import edu.uab.model.Location;
+import edu.uab.model.Component;
 import edu.uab.model.Dimensions;
 import edu.uab.model.Item;
-
+import edu.uab.model.ItemContainer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -27,8 +29,10 @@ public class AddItemModalController {
   private TextField widthField;
   @FXML
   private TextField heightField;
+  @FXML
+  private CheckBox isContainerCheckBox;
 
-  private Item createdItem;
+  private Component createdComponent;
 
   @FXML
   public void handleAdd() {
@@ -43,7 +47,11 @@ public class AddItemModalController {
           Double.parseDouble(widthField.getText()),
           Double.parseDouble(heightField.getText()));
 
-      this.createdItem = new Item(name, price, location, dimensions);
+      if (this.isContainerCheckBox.isSelected()) {
+        this.createdComponent = new ItemContainer(name, price, location, dimensions);
+      } else {
+        this.createdComponent = new Item(name, price, location, dimensions);
+      }
 
       ((Stage) this.nameField.getScene().getWindow()).close();
     } catch (Exception e) {
@@ -56,8 +64,8 @@ public class AddItemModalController {
     ((Stage) this.nameField.getScene().getWindow()).close();
   }
 
-  public Item getCreatedItem() {
-    return this.createdItem;
+  public Component getCreatedComponent() {
+    return this.createdComponent;
   }
 
   private void showAlert(String title, String message) {

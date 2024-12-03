@@ -16,6 +16,7 @@
     <TextField fx:id="lengthField" promptText="Length" />
     <TextField fx:id="widthField" promptText="Width" />
     <TextField fx:id="heightField" promptText="Height" />
+    <CheckBox fx:id="isContainerCheckBox" text="Container" />
     <Button text="Add" onAction="#handleAdd" />
     <Button text="Cancel" onAction="#handleCancel" />
   </children>

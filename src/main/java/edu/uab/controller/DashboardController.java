@@ -125,7 +125,7 @@ public class DashboardController {
   }
 
   @FXML
-  public void handleAddItem() {
+  public void handleAddComponent() {
     TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
 
     if (selectedNode != null) {
@@ -149,19 +149,19 @@ public class DashboardController {
       modalStage.showAndWait();
 
       AddItemModalController modalController = loader.getController();
-      Item newItem = modalController.getCreatedItem();
+      Component newComponent = modalController.getCreatedComponent();
 
-      if (newItem == null) {
+      if (newComponent == null) {
         return;
       }
 
       if (selectedNode == null) {
-        this.dashboard.getRootContainer().add(newItem);
-        this.treeView.getRoot().getChildren().add(new TreeItem<>(newItem));
+        this.dashboard.getRootContainer().add(newComponent);
+        this.treeView.getRoot().getChildren().add(new TreeItem<>(newComponent));
       } else {
         ItemContainer selectedContainer = (ItemContainer) selectedNode.getValue();
-        selectedContainer.add(newItem);
-        selectedNode.getChildren().add(new TreeItem<>(newItem));
+        selectedContainer.add(newComponent);
+        selectedNode.getChildren().add(new TreeItem<>(newComponent));
       }
       this.drawPlot();
     } catch (IOException e) {
@@ -171,7 +171,7 @@ public class DashboardController {
   }
 
   @FXML
-  public void handleDeleteItem() {
+  public void handleDeleteComponent() {
     TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
 
     if (selectedNode == null) {

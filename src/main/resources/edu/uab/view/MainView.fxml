@@ -42,10 +42,9 @@
           prefWidth="192.0" style="-fx-border-color: gray;" />
         <VBox layoutX="225.0" layoutY="44.0" spacing="10" prefWidth="170.0" alignment="CENTER">
           <children>
-            <Button text="Add Item" onAction="#handleAddItem" />
-            <Button text="Edit Item/Item Container" onAction="#handleEditComponent" />
-            <Button text="Delete Item" onAction="#handleDeleteItem" />
-            <Button text="Add Item Container" /> <!-- TODO: onAction="#handleAddItemContainer" -->
+            <Button text="Add Item/Container" onAction="#handleAddComponent" />
+            <Button text="Edit Item/Container" onAction="#handleEditComponent" />
+            <Button text="Delete Item/Container" onAction="#handleDeleteComponent" />
           </children>
         </VBox>
       </children>
