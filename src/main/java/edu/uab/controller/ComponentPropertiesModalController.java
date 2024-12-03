@@ -40,8 +40,8 @@ public class ComponentPropertiesModalController {
       this.name = this.nameField.getText();
       this.price = new BigDecimal(this.priceField.getText());
       this.location = new Location(
-          Integer.parseInt(this.xField.getText()),
-          Integer.parseInt(this.yField.getText()));
+          Double.parseDouble(this.xField.getText()),
+          Double.parseDouble(this.yField.getText()));
       this.dimensions = new Dimensions(
           Double.parseDouble(this.lengthField.getText()),
           Double.parseDouble(this.widthField.getText()),

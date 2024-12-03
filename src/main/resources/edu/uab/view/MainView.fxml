@@ -60,8 +60,10 @@
             <Font size="24.0" />
           </font>
         </Text>
-        <Button fx:id="scanButton" layoutX="33.0" layoutY="85.0" text="Scan" />
-        <Button fx:id="scanFarmButton" layoutX="33.0" layoutY="148.0" text="Scan" />
+        <Button fx:id="scanButton" layoutX="33.0" layoutY="85.0" text="Scan"
+          onAction="#handleFlyToSelected" />
+        <Button fx:id="scanFarmButton" layoutX="33.0" layoutY="148.0" text="Scan"
+          onAction="#handleFarmScan" />
         <Text layoutX="88.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0"
           text="Scan current item/item container" wrappingWidth="277.6">
           <font>

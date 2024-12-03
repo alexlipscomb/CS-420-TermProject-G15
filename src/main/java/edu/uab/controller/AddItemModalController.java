@@ -40,8 +40,8 @@ public class AddItemModalController {
       String name = nameField.getText();
       BigDecimal price = new BigDecimal(priceField.getText());
       Location location = new Location(
-          Integer.parseInt(xField.getText()),
-          Integer.parseInt(yField.getText()));
+          Double.parseDouble(xField.getText()),
+          Double.parseDouble(yField.getText()));
       Dimensions dimensions = new Dimensions(
           Double.parseDouble(lengthField.getText()),
           Double.parseDouble(widthField.getText()),

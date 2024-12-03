@@ -1,19 +1,19 @@
 package edu.uab.model;
 
 public class Location {
-  private final int x;
-  private final int y;
+  private final double x;
+  private final double y;
 
-  public Location(int x, int y) {
+  public Location(double x, double y) {
     this.x = x;
     this.y = y;
   }
 
-  public int getX() {
+  public double getX() {
     return this.x;
   }
 
-  public int getY() {
+  public double getY() {
     return this.y;
   }
 
@@ -34,5 +34,16 @@ public class Location {
   @Override
   public String toString() {
     return "Location(" + "x=" + this.x + ", y=" + this.y + ")";
+  }
+
+  public double distanceTo(Location other) {
+    if (other == null) {
+      throw new IllegalArgumentException("Other location cannot be null");
+    }
+
+    double dx = this.x - other.x;
+    double dy = this.y - other.y;
+
+    return Math.sqrt((dx * dx) + (dy * dy));
   }
 }
