@@ -2,7 +2,7 @@ package edu.uab.controller;
 
 import java.io.IOException;
 
-import edu.uab.controller.ItemContainerCommands.AddItemModalController;
+import edu.uab.controller.AddItemModalController;
 import edu.uab.model.Component;
 import edu.uab.model.Dashboard;
 import edu.uab.model.Item;
@@ -61,7 +61,7 @@ public class DashboardController {
 
     try {
       FXMLLoader loader = new FXMLLoader(
-          this.getClass().getResource("/edu/uab/view/ItemContainerCommands/AddItemModal.fxml"));
+          this.getClass().getResource("/edu/uab/view/AddItemModal.fxml"));
       Parent modalRoot = loader.load();
 
       Stage modalStage = new Stage();
