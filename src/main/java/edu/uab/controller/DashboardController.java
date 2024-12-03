@@ -2,7 +2,6 @@ package edu.uab.controller;
 
 import java.io.IOException;
 
-import edu.uab.controller.AddItemModalController;
 import edu.uab.model.Component;
 import edu.uab.model.Dashboard;
 import edu.uab.model.Item;
