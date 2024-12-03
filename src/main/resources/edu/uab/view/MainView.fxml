@@ -17,7 +17,7 @@
       style="-fx-border-color: gray;">
       <children>
         <Text layoutX="20.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0"
-          text="2. Visualization">
+          text="Farm View">
           <font>
             <Font size="24.0" />
           </font>
@@ -32,7 +32,7 @@
     <AnchorPane layoutX="26.0" layoutY="18.0" prefHeight="493.0" prefWidth="407.0"
       style="-fx-border-color: gray;">
       <children>
-        <Text layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Items/item containers"
+        <Text layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items/Item Containers"
           wrappingWidth="316.4405937194824">
           <font>
             <Font size="24.0" />

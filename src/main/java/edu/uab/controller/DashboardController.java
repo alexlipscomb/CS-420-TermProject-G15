@@ -22,6 +22,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.animation.AnimationTimer;
@@ -133,13 +134,19 @@ public class DashboardController {
     Tooltip.install(rectangle, tooltip);
 
     this.componentRectangleMap.put(component, rectangle);
-
     this.plotPane.getChildren().add(rectangle);
+
+    Text nameText = new Text(component.getName());
+    nameText.setX(x - 10);
+    nameText.setY(y - 10);
+    nameText.setFill(Color.BLACK);
+
+    this.plotPane.getChildren().add(nameText);
 
     if (component instanceof ItemContainer) {
       ItemContainer container = (ItemContainer) component;
       for (Component child : container.getComponents()) {
-        drawComponent(child);
+        this.drawComponent(child);
       }
     }
   }
