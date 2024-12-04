@@ -2,6 +2,11 @@ package edu.uab.model;
 
 import java.math.BigDecimal;
 
+/**
+ * Singleton class representing the command center in the farm. The command
+ * center
+ * houses a drone and cannot be removed or duplicated.
+ */
 public class CommandCenter extends ItemContainer {
   private static CommandCenter instance;
 
@@ -12,6 +17,11 @@ public class CommandCenter extends ItemContainer {
     this.drone = new Drone(this);
   }
 
+  /**
+   * Returns the singleton instance of the Command Center.
+   *
+   * @return The singleton instance of the Command Center.
+   */
   public static CommandCenter getInstance() {
     if (CommandCenter.instance == null) {
       CommandCenter.instance = new CommandCenter();
@@ -20,6 +30,11 @@ public class CommandCenter extends ItemContainer {
     return CommandCenter.instance;
   }
 
+  /**
+   * Returns the drone associated with the command center.
+   *
+   * @return The drone associated with the command center.
+   */
   public Drone getDrone() {
     return this.drone;
   }

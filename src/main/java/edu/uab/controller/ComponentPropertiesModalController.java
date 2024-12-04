@@ -9,6 +9,11 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * Controller for the "Edit Component Properties" modal dialog, allowing the
+ * user
+ * to modify component attributes like name, price, dimensions, and location.
+ */
 public class ComponentPropertiesModalController {
   @FXML
   private TextField nameField;
@@ -34,6 +39,10 @@ public class ComponentPropertiesModalController {
 
   private boolean confirmed = false;
 
+  /**
+   * Handles applying the changes made by the user, validating input and
+   * updating the component attributes.
+   */
   @FXML
   public void handleApply() {
     try {
@@ -54,26 +63,37 @@ public class ComponentPropertiesModalController {
     }
   }
 
+  /**
+   * Cancels the editing operation without saving changes.
+   */
   public void handleCancel() {
     this.confirmed = false;
     ((Stage) this.nameField.getScene().getWindow()).close();
   }
 
-  private void showAlert(String title, String message) {
-    Alert alert = new Alert(AlertType.ERROR);
-    alert.setTitle(title);
-    alert.setContentText(message);
-    alert.showAndWait();
-  }
-
+  /**
+   * Returns whether the changes were confirmed by the user.
+   *
+   * @return {@code true} if the user confirmed changes, {@false} otherwise.
+   */
   public boolean isConfirmed() {
     return this.confirmed;
   }
 
+  /**
+   * Gets the name of the component.
+   * 
+   * @return The name of the component.
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Sets the name of the component.
+   * 
+   * @param name The name of the component
+   */
   public void setName(String name) {
     this.name = name;
     if (this.nameField != null) {
@@ -81,10 +101,20 @@ public class ComponentPropertiesModalController {
     }
   }
 
+  /**
+   * Gets the price of the component.
+   *
+   * @return The price of the component
+   */
   public BigDecimal getPrice() {
     return this.price;
   }
 
+  /**
+   * Sets the price of the component.
+   * 
+   * @param price The price of the component.
+   */
   public void setPrice(BigDecimal price) {
     this.price = price;
     if (this.price != null) {
@@ -92,10 +122,20 @@ public class ComponentPropertiesModalController {
     }
   }
 
+  /**
+   * Gets the dimensions of the component.
+   *
+   * @return The dimensions of the component.
+   */
   public Dimensions getDimensions() {
     return this.dimensions;
   }
 
+  /**
+   * Sets the dimensions of the component.
+   * 
+   * @param dimensions The dimensions of the component.
+   */
   public void setDimensions(Dimensions dimensions) {
     this.dimensions = dimensions;
 
@@ -112,6 +152,11 @@ public class ComponentPropertiesModalController {
     }
   }
 
+  /**
+   * Gets the location of the component.
+   *
+   * @return The location of the component.
+   */
   public Location getLocation() {
     return this.location;
   }
@@ -126,5 +171,18 @@ public class ComponentPropertiesModalController {
     if (this.yField != null) {
       this.yField.setText(String.valueOf(location.getY()));
     }
+  }
+
+  /**
+   * Displays an error alert with the given title and message.
+   *
+   * @param title   The title of the alert.
+   * @param message The message to display.
+   */
+  private void showAlert(String title, String message) {
+    Alert alert = new Alert(AlertType.ERROR);
+    alert.setTitle(title);
+    alert.setContentText(message);
+    alert.showAndWait();
   }
 }

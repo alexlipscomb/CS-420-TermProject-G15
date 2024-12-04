@@ -30,6 +30,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 
+/**
+ * Controller class for managing the dashboard UI, handling user interactions,
+ * visualizing farm components, and managing drone-related operations.
+ */
 public class DashboardController {
   @FXML
   private TreeView<Component> treeView;
@@ -40,6 +44,10 @@ public class DashboardController {
   private Rectangle highlightedRectangle = null;
   private CommandCenter commandCenter;
 
+  /**
+   * Initializes the dashboard controller, setting up the tree view,
+   * loading components, and setting up plot pane visualization.
+   */
   @FXML
   public void initialize() {
     this.dashboard = Dashboard.getInstance();
@@ -81,6 +89,12 @@ public class DashboardController {
     });
   }
 
+  /**
+   * Populates the tree view with components from the given container.
+   *
+   * @param treeItem  The root node of the tree.
+   * @param container The container whose components should be added to the tree.
+   */
   private void populateTree(TreeItem<Component> treeItem, ItemContainer container) {
     for (Component component : container.getComponents()) {
       TreeItem<Component> childNode = new TreeItem<>(component);
@@ -92,6 +106,9 @@ public class DashboardController {
     }
   }
 
+  /**
+   * Draws the entire plot, visualizing all components and updating the plot pane.
+   */
   private void drawPlot() {
     this.plotPane.getChildren().removeIf(node -> !(node instanceof ImageView));
     List<Component> components = this.dashboard.getAllComponents();
@@ -105,6 +122,11 @@ public class DashboardController {
     }
   }
 
+  /**
+   * Draws an individual component on the plot.
+   *
+   * @param component The component to be visualized.
+   */
   private void drawComponent(Component component) {
     if (component == null || component.getLocation() == null || component.getDimensions() == null) {
       return;
@@ -151,6 +173,9 @@ public class DashboardController {
     }
   }
 
+  /**
+   * Handles adding a new component to the tree and plot pane.
+   */
   @FXML
   public void handleAddComponent() {
     TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
@@ -197,6 +222,9 @@ public class DashboardController {
     }
   }
 
+  /**
+   * Handles deleting the selected component from the tree and plot pane.
+   */
   @FXML
   public void handleDeleteComponent() {
     TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
@@ -225,6 +253,9 @@ public class DashboardController {
     this.showAlert("Success", selectedComponent.getName() + " has been deleted.", AlertType.INFORMATION);
   }
 
+  /**
+   * Handles editing the properties of the selected component.
+   */
   public void handleEditComponent() {
     TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
 
@@ -270,6 +301,11 @@ public class DashboardController {
     }
   }
 
+  /**
+   * Handles the "fly to selected" operation, sending the drone to the selected
+   * component
+   * and then returning it to the command center.
+   */
   @FXML
   public void handleFlyToSelected() {
     TreeItem<Component> selectedNode = this.treeView.getSelectionModel().getSelectedItem();
@@ -302,6 +338,10 @@ public class DashboardController {
     }.start();
   }
 
+  /**
+   * Handles scanning all farm components by directing the drone to visit each in
+   * order of initial distance from the drone.
+   */
   @FXML
   public void handleFarmScan() {
     Drone drone = this.commandCenter.getDrone();

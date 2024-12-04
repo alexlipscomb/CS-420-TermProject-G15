@@ -13,6 +13,10 @@ import javafx.stage.Stage;
 
 import java.math.BigDecimal;
 
+/**
+ * Controller for the "Add Item" modal dialog, allowing the user to create
+ * a new item or item container with specified attributes.
+ */
 public class AddItemModalController {
 
   @FXML
@@ -34,6 +38,10 @@ public class AddItemModalController {
 
   private Component createdComponent;
 
+  /**
+   * Handles the addition of a new item or item container, validating input
+   * and creating the component.
+   */
   @FXML
   public void handleAdd() {
     try {
@@ -59,19 +67,36 @@ public class AddItemModalController {
     }
   }
 
+  /**
+   * Cancels the creation of a new component and closes the modal dialog.
+   */
   @FXML
   public void handleCancel() {
     ((Stage) this.nameField.getScene().getWindow()).close();
   }
 
+  /**
+   * Returns the newly created component.
+   *
+   * @return The created component, or {@code null} if creation was canceled.
+   */
   public Component getCreatedComponent() {
     return this.createdComponent;
   }
 
+  /**
+   * Displays an error alert with the given title and message.
+   *
+   * @param title   The title of the alert.
+   * @param message The message to display.
+   */
   private void showAlert(String title, String message) {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setTitle(title);
     alert.setContentText(message);
     alert.showAndWait();
+
+    // TODO: This and the same one in ComponentPropertiesModalController should be
+    // generalized.
   }
 }
