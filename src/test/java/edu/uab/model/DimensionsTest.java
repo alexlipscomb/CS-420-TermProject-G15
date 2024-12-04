@@ -22,4 +22,17 @@ public class DimensionsTest {
   void testNegativeDimensionsException() {
     assertThrows(IllegalArgumentException.class, () -> new Dimensions(-1, -10, -100));
   }
+
+  @Test
+  void testDimensionsEquality() {
+    Dimensions dimensions1 = new Dimensions(10, 20, 5);
+    Dimensions dimensions2 = new Dimensions(10, 20, 5);
+
+    assertEquals(dimensions1, dimensions2);
+  }
+
+  @Test
+  void testInvalidDimensions() {
+    assertThrows(IllegalArgumentException.class, () -> new Dimensions(-10, 20, 5));
+  }
 }
